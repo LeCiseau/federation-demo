@@ -5,6 +5,7 @@ Also we have to add PostgreSql database for each services and Postgraphile
 At the end services should be dockerized
 
 Cedric: Staff
+
 Damien: Salon
 
 
