@@ -4,6 +4,8 @@ For the Proof of concept we have to implement Salon and Staff service for gatewa
 Also we have to add PostgreSql database for each services and Postgraphile
 At the end services should be dockerized
 
+Cedric: Staff
+Damien: Salon
 
 
 ## Apollo Federation Demo
