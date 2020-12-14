@@ -1,3 +1,11 @@
+# Brief 
+
+For the Proof of concept we have to implement Salon and Staff service for gateway with an authentification (JWT ?)
+Also we have to add PostgreSql database for each services and Postgraphile
+At the end services should be dockerized
+
+
+
 ## Apollo Federation Demo
 
 This repository is a demo of using Apollo Federation to build a single schema on top of multiple services. The microservices are located under the [`./services`](./services/) folder and the gateway that composes the overall schema is in the [`gateway.js`](./gateway.js) file.
