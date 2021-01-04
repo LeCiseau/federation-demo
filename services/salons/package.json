@@ -1,0 +1,14 @@
+{
+  "name": "salons",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@apollo/federation": "latest",
+    "@graphql-tools/graphql-file-loader": "^6.2.6",
+    "@graphql-tools/load": "^6.2.5",
+    "apollo-server": "latest",
+    "graphql": "latest",
+    "graphql-tools": "^4.0.8"
+  }
+}

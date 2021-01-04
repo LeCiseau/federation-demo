@@ -1,0 +1,35 @@
+extend type Query {
+    wesh: Salon
+}
+
+"Salon definition"
+type Salon @key(fields: "id") {
+    id: ID!
+    logo: String
+    backgrounds: [String]
+    timezone: [String]
+    carouselImages: [String]
+    currency: String
+    adwordsCampaignId: String
+    adwordsSync: Boolean
+    status: String
+    email: String
+    slug: String
+    description: String
+    phone: String
+    mobile: String
+    companyName: String
+    salonCode: String
+    thirdPartyPaymentId: String
+    billingFirstName: String
+    billingLastName: String
+    billingBirthDate: String
+    siret: String
+    iban: String
+    thirdPartyBillingId: String
+    recommendation: String
+    commission: Int 
+    billingNationality: String
+    billingCountry: String
+    dateAcceptedGCU: String
+}
