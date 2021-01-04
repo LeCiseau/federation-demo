@@ -7,16 +7,18 @@ const typeDef = readFileSync('./services/salons/schema.graphql');
 const typeDefs = gql`${typeDef}`;
 
 const resolvers = {
-  Query: {
-    wesh() {
-      return salons[0];
-    }
-  },
-  Salon: {
-    __resolveReference(object) {
-      return salons.find(user => user.id === object.id);
-    }
-  }
+    Query: {
+        firstSalon: () => salons[0],
+        salon: (parent, args, context, info) =>
+            salons.find(salon => salon.id === args.id)
+    },
+    Mutation: {
+        createSalon: async (parent, args, context, info) =>
+          ({
+              id: Math.round(Math.random() * 1000),
+              name: args.salon.name,
+          })
+    },
 };
 
 const server = new ApolloServer({
@@ -37,6 +39,7 @@ const salons = [
     id: "1",
     name: "L'appart de zach",
     birthDate: "1815-12-10",
+    logo: "logosalon.jpg",
     username: "@ada"
   },
   {
