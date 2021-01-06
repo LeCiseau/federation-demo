@@ -1,20 +1,106 @@
 extend type Query {
     salon(id: ID! ): Salon
     firstSalon: Salon
+    allSalons: [Salon]
+}
+
+enum AccessType {
+    METRO
+    BUS
+    ROAD
+    PLACE
+    RER
+    TRAIN STATION
+    PARKING
+    SHOPPING MALL
+    STREETCAR
+}
+
+enum SalonTypeCategory {
+    INDEPENDENT
+    SERIES
+}
+
+enum ExploitationType {
+    OWNER
+    FRANCHISE
+}
+
+enum SalonStatus {
+  CREATED
+  PUBLIC
+  PRIVATE
+  NOT_ENROLLED
+  DISABLED
+}
+
+type PartnerRef @key(fields: "id") {
+    id: ID!
+    name: String!
+}
+
+type GeoPoint {
+    lat: Float
+    lng: Float
+}
+
+type Tax {
+    id: ID!
+    countryCode: String
+    vatNumber: String
+    taxRate: Int
+}
+
+type Fees {
+    id: ID!
+    commission: Int
+    percentFees: Int
+    statedFees: Int
+}
+
+type Access {
+    type: AccessType
+    name: String
+}
+
+type Address {
+    id: ID!
+    address: String
+    city: String
+    zipCode: String
+}
+
+type SalonType {
+    category: SalonTypeCategory
+    name: String
+    exploitation: ExploitationType
+    exploitationNumber: String
 }
 
 "Salon definition"
 type Salon @key(fields: "id") {
     id: ID!
+
+    partnerRefs: [PartnerRef]
+    geoLocation: GeoPoint
+    tax: Tax
+    fees: Fees
+    access: [Access]
+    address: Address
+    billingAddress: Address
+    type: SalonType
+
+
+    status: SalonStatus
+
     name: String!
     logo: String
     backgrounds: [String]
-    timezone: [String]
+    timezone: String
     carouselImages: [String]
-    currency: String
+
     adwordsCampaignId: String
     adwordsSync: Boolean
-    status: String
     email: String
     slug: String
     description: String
@@ -22,25 +108,26 @@ type Salon @key(fields: "id") {
     mobile: String
     companyName: String
     salonCode: String
-    thirdPartyPaymentId: String
-    billingFirstName: String
-    billingLastName: String
-    billingBirthDate: String
     siret: String
     iban: String
-    thirdPartyBillingId: String
     recommendation: String
     commission: Int 
-    billingNationality: String
-    billingCountry: String
     dateAcceptedGCU: String
 }
 
 input InputSalon {
     name: String!
     logo: String
+    status: SalonStatus
+    email: String
+}
+
+input InputAddress {
+    address: String!
+    city: String
+    zipCode: String
 }
 
 type Mutation {
-  createSalon(salon: InputSalon!): Salon
+  createSalon(salon: InputSalon!, address: InputAddress): Salon
 }

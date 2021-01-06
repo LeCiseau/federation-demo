@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model address {
+  id             Int      @id @default(autoincrement())
+  uuid           String?    @default(uuid())
+  geoLocation    Json?
+  address        String?
+  city           String?
+  zipCode        String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+}
+
+model fees {
+  id          Int      @id @default(autoincrement())
+  uuid        String?    @default(uuid())
+  commission  Int?
+  percentFees Int?
+  statedFees  Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model salon {
+  id                Int       @id @default(autoincrement())
+  uuid              String?    @default(uuid())
+  partnerRefs       Json?
+  access            Json?
+  type              String?
+  status            String?
+  name              String
+  logo              String?
+  backgrounds       String[]
+  timezone          String?
+  carouselImages    String[]
+  adwordsCampaignId String?
+  adwordsSync       Boolean?  @default(false)
+  email             String    @unique
+  slug              String?
+  description       String?
+  phone             String?
+  mobile            String?
+  companyName       String?
+  salonCode         String?
+  siret             String?
+  iban              String?
+  recommendation    String?
+  dateAcceptedGcu   DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  addressId         Int?
+  feesId         Int?
+  taxId         Int?
+  address           address?   @relation(fields: [addressId], references: [id])
+  fees              fees?      @relation(fields: [feesId], references: [id])
+  tax               tax?       @relation(fields: [taxId], references: [id])
+}
+
+model tax {
+  id          Int      @id @default(autoincrement())
+  uuid        String?    @default(uuid())
+  countryCode String?  @unique
+  vatNumber   String?
+  taxRate     Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}

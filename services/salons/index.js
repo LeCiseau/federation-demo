@@ -3,23 +3,51 @@ const { ApolloServer, gql } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
 
 const typeDef = readFileSync('./services/salons/schema.graphql');
+const { PrismaClient } = require('@prisma/client')
 
+const prisma = new PrismaClient();
 const typeDefs = gql`${typeDef}`;
 
 const resolvers = {
     Query: {
         firstSalon: () => salons[0],
         salon: (parent, args, context, info) =>
-            salons.find(salon => salon.id === args.id)
+            salons.find(salon => salon.id === args.id),
+        allSalons: async (parent, args, context, info) => {
+            const tmp = await context.prisma.salon.findMany({
+              include: {
+                address: true,
+              },
+            });
+            console.log(tmp);
+            return tmp;
+        }
     },
     Mutation: {
-        createSalon: async (parent, args, context, info) =>
-          ({
-              id: Math.round(Math.random() * 1000),
+        createSalon: async (parent, args, context, info) => {
+          console.log(args);
+          return prisma.salon.create({
+            data: {
               name: args.salon.name,
+              email: args.salon.email,
+              /*tax: args.tax && {
+                connectOrCreate: { 
+                    where:  { countryCode: args.countryCode },
+                    create: { countryCode: args.countryCode }
+                },
+              }*/
+              address: args.address && {
+                create: {
+                  address: args.address.address,
+                  city: args.address.city,
+                },
+              },
+            },
           })
+        }
     },
 };
+
 
 const server = new ApolloServer({
   schema: buildFederatedSchema([
@@ -27,10 +55,13 @@ const server = new ApolloServer({
       typeDefs,
       resolvers
     }
-  ])
+  ]),
+  context: {
+    prisma,
+  }
 });
 
-server.listen({ port: 4005 }).then(({ url }) => {
+server.listen({ port: 4005 }).then(async ({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
 

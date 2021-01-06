@@ -5,10 +5,30 @@
   },
   "dependencies": {
     "@apollo/federation": "latest",
+    "@graphile/federation": "^0.0.3",
     "@graphql-tools/graphql-file-loader": "^6.2.6",
     "@graphql-tools/load": "^6.2.5",
+    "@prisma/client": "^2.14.0",
     "apollo-server": "latest",
+    "apollo-server-express": "^2.19.1",
+    "apollo-server-fastify": "^2.19.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "fastify": "^3.9.2",
     "graphql": "latest",
-    "graphql-tools": "^4.0.8"
+    "graphql-sequelize": "^9.4.0",
+    "graphql-tools": "^4.0.8",
+    "graphql-transform-federation": "^2.2.0",
+    "pg": "^8.5.1",
+    "postgraphile": "^4.10.0",
+    "postgraphile-apollo-server": "^0.1.1",
+    "postgraphile-plugin-nested-mutations": "^1.0.1",
+    "prisma": "^1.34.10"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.14.0",
+    "@types/node": "^14.14.19",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   }
 }
